@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="mail_template_delivery_done_notify_salesperson" model="mail.template">
+            <field name="name">Delivery Done: Notify Salesperson</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="subject"><![CDATA[Delivery Done for {{ object.name }}]]></field>
+            <field name="email_to"><![CDATA[{{ object.sale_id.user_id.email }}]]></field>
+            <field name="render_model">stock.picking</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    Hello,
+                    <br/>
+                    <strong t-out="object.sale_id.user_id.name or ''"></strong>
+                    <br/>
+                    The delivery <strong t-out="object.name or ''"></strong> for sale order
+                    <strong t-out="object.origin or ''"></strong>
+                    has been completed.
+                    <br/>
+                    <strong>Customer:</strong>
+                    <strong t-out="object.partner_id.name or ''"></strong>
+                    <br/>
+                    <br/>
+                    <p>Thank you.</p>
+                </div>
+
+            </field>
+        </record>
+    </data>
+</odoo>
